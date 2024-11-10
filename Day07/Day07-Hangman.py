@@ -1,65 +1,9 @@
 import random
+from hangman_words import word_list
+import hangman_art
 
-# ASCII stages for the hangman display
-stages = [r'''
-  +---+
-  |   |
-  O   |
- /|\  |
- / \  |
-      |
-=========
-''', r'''
-  +---+
-  |   |
-  O   |
- /|\  |
- /    |
-      |
-=========
-''', r'''
-  +---+
-  |   |
-  O   |
- /|\  |
-      |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
- /|   |
-      |
-      |
-=========''', '''
-  +---+
-  |   |
-  O   |
-  |   |
-      |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
-      |
-      |
-      |
-=========
-''', '''
-  +---+
-  |   |
-      |
-      |
-      |
-      |
-=========
-''']
 
 # Define a list of words
-word_list = ["aardvark", "baboon", "camel"]
 lives = 6
 
 # Randomly choose a word from the list
@@ -69,16 +13,22 @@ chosen_word = random.choice(word_list)
 game_over = False
 correct_letters = []
 
+# Print the game logo
+print(hangman_art.logo)
+
 # Create a placeholder with "_" for each letter in the chosen word
 placeholder =""
 word_lenght = len(chosen_word)
 for position in range(word_lenght):
     placeholder += "_" 
-print(placeholder)
+print("Word to guess: ",placeholder)
 
 # Main game loop
 while not game_over:
+    print(f"**************************** {lives} / 6 LIVES LEFT****************************")
     guess = input("Guess a letter: ").lower()
+    print(hangman_art.stages[lives])
+
     
     # Create a display to show guessed letters in the correct positions
     display = ""
@@ -93,15 +43,17 @@ while not game_over:
             display += letter
         else:
             display += "_"
+    if guess in correct_letters:
+        print(f"You've already guessed {guess}")
 
-    print(f"Guess result: {display}")
-    
-    # Reduce lives if guess is incorrect
+    # Deduct a life if the guessed letter is incorrect
     if guess not in chosen_word:
         lives -= 1
+        print(f"You guessed {guess}, that's not in the word. You lose a life.")
         if lives == 0:
             game_over = True
             print("***********************YOU LOSE**********************")
+            print(f"************CORRECT WORD: {chosen_word} ************")
 
     # Check if the player has guessed all letters
     
@@ -109,4 +61,7 @@ while not game_over:
         game_over = True
         print("****************************YOU WIN****************************")
 
-    print(stages[lives])
+
+    
+    print(f"Guess result: {display}")
+    
