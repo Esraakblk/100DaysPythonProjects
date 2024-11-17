@@ -15,6 +15,11 @@ def encrypt(original_text, shift_amount):
     Args:
         original_text (str): The text to encrypt.
         shift_amount (int): The number of positions to shift each letter.
+        operation (str): Either 'encode' for encryption or 'decode' for decryption.
+
+    Returns:
+        None: Prints the resulting text.
+
     """
     # Initialize an empty string to hold the encrypted text.
     chipper_text = ""
@@ -28,14 +33,22 @@ def encrypt(original_text, shift_amount):
 
         # Ensure the position wraps around if it goes past 'z'.
         shifted_position %= len(alphabet)
-        
+
         # Append the encrypted letter to the result string.
         chipper_text += alphabet[shifted_position]
         
     print(chipper_text)
+def decrypt(original_text, shift_amount):
+    chipper_text=""
+    for letter in original_text:
+        shifted_position = alphabet.index(letter) - shift_amount
+        shifted_position %= len(alphabet)
+        chipper_text += alphabet[shifted_position]
+    print(chipper_text)
 
 # Call the encrypt function with the user's inputs.
 encrypt(text, shift)
+decrypt(text,shift)
         
 
    
