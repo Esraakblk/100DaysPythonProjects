@@ -8,25 +8,29 @@ direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n").lower
 text = input("Type your message:\n").lower()
 shift = int(input("Type the shift number:\n"))
 
-def encrypt(original_text, shift_amount):
+def caesar(original_text, shift_amount, encode_or_decode):
     """ 
-    Encrypts the given text using a Caesar Cipher with the specified shift amount.
+        Encrypts the given text using a Caesar Cipher with the specified shift amount.
 
-    Args:
-        original_text (str): The text to encrypt.
-        shift_amount (int): The number of positions to shift each letter.
-        operation (str): Either 'encode' for encryption or 'decode' for decryption.
+        Args:
+            original_text (str): The text to encrypt.
+            shift_amount (int): The number of positions to shift each letter.
+            operation (str): Either 'encode' for encryption or 'decode' for decryption.
 
-    Returns:
-        None: Prints the resulting text.
+        Returns:
+            None: Prints the resulting text.
 
     """
     # Initialize an empty string to hold the encrypted text.
-    chipper_text = ""
+    output_text = ""
 
     # Loop through each letter in the original text.
     for letter in original_text:
 
+        # Adjust the shift direction for decoding
+        if encode_or_decode == "decode":
+            shift_amount *= -1
+            
         # Find the current position of the letter in the alphabet.
         # Shift the position forward by the shift amount.
         shifted_position = alphabet.index(letter) + shift_amount
@@ -35,20 +39,13 @@ def encrypt(original_text, shift_amount):
         shifted_position %= len(alphabet)
 
         # Append the encrypted letter to the result string.
-        chipper_text += alphabet[shifted_position]
-        
-    print(chipper_text)
-def decrypt(original_text, shift_amount):
-    chipper_text=""
-    for letter in original_text:
-        shifted_position = alphabet.index(letter) - shift_amount
-        shifted_position %= len(alphabet)
-        chipper_text += alphabet[shifted_position]
-    print(chipper_text)
-
+        output_text += alphabet[shifted_position]
+            
+    print(f"Here is the {encode_or_decode}d result: {output_text}")
+    
 # Call the encrypt function with the user's inputs.
-encrypt(text, shift)
-decrypt(text,shift)
+caesar(text, shift, direction)
+
         
 
    
